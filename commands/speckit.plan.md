@@ -72,11 +72,11 @@ You **MUST** consider the user input before proceeding (if not empty).
    {
      "multi_repo_branching": {
        "scan_depth": 3,
-       "type": "independent"
+       "type": "auto"
      }
    }
    ```
-   - `type`: `"independent"` (default), `"submodule"`, or `"auto"`
+   - `type`: `"auto"` (default), `"independent"`, or `"submodule"`
    - `scan_depth`: max directory depth to scan (default: 2)
    - If `init-options.json` does not exist or has no `multi_repo_branching` key, use defaults: `type = "auto"`, `scan_depth = 2`
 

@@ -40,7 +40,7 @@ Add to `.specify/init-options.json` in your project root:
 {
   "multi_repo_branching": {
     "scan_depth": 3,
-    "type": "independent"
+    "type": "auto"
   }
 }
 ```
