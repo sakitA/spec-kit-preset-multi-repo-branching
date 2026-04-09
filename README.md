@@ -184,7 +184,7 @@ This preset overrides core `speckit.plan` and `speckit.tasks` commands. When Spe
 
 ### When composition lands
 
-Spec Kit has a composition feature in development (`strategy: wrap`, `strategy: append`). Once merged, this preset can migrate to thin wrapper commands that reference core content via `{CORE_TEMPLATE}` — eliminating the need to track upstream changes manually.
+Spec Kit has a composition feature in development (`strategy: wrap`, `strategy: append`). Once merged, a new version of this preset will be released that uses thin wrapper commands referencing core content via `{CORE_TEMPLATE}` — eliminating the need to track upstream changes manually. At that point, the preset will automatically stay in sync with core updates without requiring new releases for each Spec Kit version.
 
 ## Stacking
 
