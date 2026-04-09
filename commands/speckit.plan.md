@@ -65,7 +65,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 2. **Load context**: Read FEATURE_SPEC and `/memory/constitution.md`. Load IMPL_PLAN template (already copied).
 
-<!-- PRESET: nested-repos START -->
+<!-- PRESET: multi-repo-branching START -->
 3. **Discover nested repositories**:
    Read `.specify/init-options.json` from the repo root. Look for the `nested_repos` object:
    ```json
@@ -111,7 +111,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 
    - This information will be used by `/speckit.tasks` to generate a setup task for creating feature branches in the affected repos
    - If no repos are affected, do not add the section
-<!-- PRESET: nested-repos END -->
+<!-- PRESET: multi-repo-branching END -->
 
 5. **Execute plan workflow**: Follow the structure in IMPL_PLAN template to:
    - Fill Technical Context (mark unknowns as "NEEDS CLARIFICATION")

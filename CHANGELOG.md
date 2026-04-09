@@ -22,4 +22,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Commands instruct AI to add Phase 1 branch-creation tasks to tasks.md dynamically
 - Configuration via `.specify/init-options.json`
 - Upstream version tracking via `<!-- Based on spec-kit vX.Y.Z -->` comment in commands
-- Clear `<!-- PRESET: nested-repos START/END -->` markers around all preset additions
+- Clear `<!-- PRESET: multi-repo-branching START/END -->` markers around all preset additions

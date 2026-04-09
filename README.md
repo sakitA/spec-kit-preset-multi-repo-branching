@@ -1,6 +1,6 @@
-# Nested Repository Support for Spec Kit
+# Multi-Repo Branching for Spec Kit
 
-A community preset for [Spec Kit](https://github.com/github/spec-kit) that adds multi-module nested repository support during the **plan** and **tasks** phases of the spec-driven development workflow.
+A community preset for [Spec Kit](https://github.com/github/spec-kit) that coordinates feature branch creation across multiple git repositories during the **plan** and **tasks** phases of the spec-driven development workflow.
 
 ## Problem
 
@@ -22,10 +22,10 @@ The preset supports two types of nested repositories:
 
 ```bash
 # Install from GitHub release
-specify preset add --from https://github.com/sakitA/spec-kit-preset-nested-repos/archive/refs/tags/v1.0.0.zip
+specify preset add --from https://github.com/sakitA/spec-kit-preset-multi-repo-branching/archive/refs/tags/v1.0.0.zip
 
 # Or install from local directory (for development)
-specify preset add --dev /path/to/spec-kit-preset-nested-repos
+specify preset add --dev /path/to/spec-kit-preset-multi-repo-branching
 
 # Verify installation
 specify preset list
@@ -148,7 +148,7 @@ This preset overrides **commands only** — no template overrides. Core template
 
 Overriding templates requires copying the entire core template to add a few lines. When upstream updates templates, presets become stale. By keeping template overrides out, the AI uses the latest core templates and adds nested-repo sections dynamically via command instructions.
 
-Command overrides are clearly marked with `<!-- PRESET: nested-repos START/END -->` comments around additions for easy diffing when upstream changes.
+Command overrides are clearly marked with `<!-- PRESET: multi-repo-branching START/END -->` comments around additions for easy diffing when upstream changes.
 
 ### Composition readiness
 
@@ -163,7 +163,7 @@ If another preset also overrides `speckit.plan` or `speckit.tasks`, the one with
 ## Removing
 
 ```bash
-specify preset remove nested-repos
+specify preset remove multi-repo-branching
 ```
 
 ## License

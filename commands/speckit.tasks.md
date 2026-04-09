@@ -69,13 +69,13 @@ You **MUST** consider the user input before proceeding (if not empty).
 3. **Execute task generation workflow**:
    - Load plan.md and extract tech stack, libraries, project structure
    - Load spec.md and extract user stories with their priorities (P1, P2, P3, etc.)
-<!-- PRESET: nested-repos START -->
+<!-- PRESET: multi-repo-branching START -->
    - **Nested repo branch setup**: If plan.md contains an "Affected Nested Repositories" section (table with Repo Path, Type, Reason columns), extract the repo paths and types. Generate setup tasks (in Phase 1) to create the feature branch in each affected nested repo:
      - For repos with type **independent**: `git -C "<repo_path>" checkout -b "<BRANCH_NAME>"`
      - For repos with type **submodule**: `git submodule update --init "<repo_path>" && git -C "<repo_path>" checkout -b "<BRANCH_NAME>"`
      - The branch name (`BRANCH_NAME`) is the current feature branch name (available from the plan.md header or from `git rev-parse --abbrev-ref HEAD`).
      - These tasks should be marked `[P]` (parallelizable) and placed at the very start of Phase 1 before other setup tasks.
-<!-- PRESET: nested-repos END -->
+<!-- PRESET: multi-repo-branching END -->
    - If data-model.md exists: Extract entities and map to user stories
    - If contracts/ exists: Map interface contracts to user stories
    - If research.md exists: Extract decisions for setup tasks
@@ -86,9 +86,9 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 4. **Generate tasks.md**: Use `templates/tasks-template.md` as structure, fill with:
    - Correct feature name from plan.md
-<!-- PRESET: nested-repos START -->
+<!-- PRESET: multi-repo-branching START -->
    - Phase 1: Setup tasks (project initialization, **nested repo branching if applicable**)
-<!-- PRESET: nested-repos END -->
+<!-- PRESET: multi-repo-branching END -->
    - Phase 2: Foundational tasks (blocking prerequisites for all user stories)
    - Phase 3+: One phase per user story (in priority order from spec.md)
    - Each phase includes: story goal, independent test criteria, tests (if requested), implementation tasks
