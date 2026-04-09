@@ -29,7 +29,7 @@ specify preset add --dev /path/to/spec-kit-preset-nested-repos
 
 # Verify installation
 specify preset list
-specify preset resolve plan-template
+specify preset resolve speckit.plan
 ```
 
 ## Configuration
@@ -137,12 +137,22 @@ If you don't add any config, the preset auto-detects:
 
 ## What's Overridden
 
+This preset overrides **commands only** — no template overrides. Core templates are used as-is, and the commands instruct the AI agent to add nested-repo sections when generating plan.md and tasks.md.
+
 | File | Type | Core Behavior Preserved | Additions |
 |------|------|------------------------|-----------|
-| `plan-template.md` | template | ✅ All sections | + "Affected Nested Repositories" section |
-| `tasks-template.md` | template | ✅ All phases | + Phase 1 branch creation guidance |
-| `speckit.plan` | command | ✅ Full workflow | + Step 3: discover repos, Step 4: identify affected |
+| `speckit.plan` | command | ✅ Full workflow | + Steps 3-4: discover repos, identify affected, add section to plan.md |
 | `speckit.tasks` | command | ✅ Full workflow | + Branch-creation task generation in Phase 1 |
+
+### Why commands-only?
+
+Overriding templates requires copying the entire core template to add a few lines. When upstream updates templates, presets become stale. By keeping template overrides out, the AI uses the latest core templates and adds nested-repo sections dynamically via command instructions.
+
+Command overrides are clearly marked with `<!-- PRESET: nested-repos START/END -->` comments around additions for easy diffing when upstream changes.
+
+### Composition readiness
+
+Spec Kit has a [composition strategies feature](https://github.com/github/spec-kit) in development (`append`, `prepend`, `wrap`). When it lands, this preset can migrate to `strategy: wrap` for commands — eliminating all core content duplication.
 
 ## Stacking
 

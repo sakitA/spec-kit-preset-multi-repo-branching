@@ -1,3 +1,4 @@
+<!-- Based on spec-kit v0.5.1 (SHA: aa2282e) — core content from github/spec-kit -->
 ---
 description: Execute the implementation planning workflow using the plan template to generate design artifacts.
 handoffs: 
@@ -64,7 +65,8 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 2. **Load context**: Read FEATURE_SPEC and `/memory/constitution.md`. Load IMPL_PLAN template (already copied).
 
-3. **Discover nested repositories** (preset: nested-repos):
+<!-- PRESET: nested-repos START -->
+3. **Discover nested repositories**:
    Read `.specify/init-options.json` from the repo root. Look for the `nested_repos` object:
    ```json
    {
@@ -96,9 +98,20 @@ You **MUST** consider the user input before proceeding (if not empty).
 4. **Identify affected nested repositories**: If nested repos were discovered:
    - Read the feature spec (FEATURE_SPEC)
    - For each discovered nested repo, determine whether this feature requires changes in that repo based on the spec's requirements, user stories, and technical scope
-   - Document the affected repos in the plan's **Affected Nested Repositories** section (under Project Structure), listing each repo path, its type (`independent` or `submodule`), and a brief reason why it's affected
+   - Add an **Affected Nested Repositories** section under **Project Structure** in plan.md with a table:
+
+     ```markdown
+     ### Affected Nested Repositories
+
+     | Repo Path | Type | Reason |
+     |-----------|------|--------|
+     | components/auth | independent | New OAuth2 provider needs auth module changes |
+     | libs/shared | submodule | Shared types needed for the new API contract |
+     ```
+
    - This information will be used by `/speckit.tasks` to generate a setup task for creating feature branches in the affected repos
-   - If no repos are affected, delete the "Affected Nested Repositories" section from the plan
+   - If no repos are affected, do not add the section
+<!-- PRESET: nested-repos END -->
 
 5. **Execute plan workflow**: Follow the structure in IMPL_PLAN template to:
    - Fill Technical Context (mark unknowns as "NEEDS CLARIFICATION")

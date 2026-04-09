@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Tasks command override with branch-creation task generation
   - Type-aware branching: `git -C` for independent, `git submodule update` for submodules
   - Generated as Phase 1 setup tasks
-- Plan template with "Affected Nested Repositories" section
-- Tasks template with Phase 0 nested repo branch example
+- Commands instruct AI to add "Affected Nested Repositories" section to plan.md dynamically
+- Commands instruct AI to add Phase 1 branch-creation tasks to tasks.md dynamically
 - Configuration via `.specify/init-options.json`
+- Upstream version tracking via `<!-- Based on spec-kit vX.Y.Z -->` comment in commands
+- Clear `<!-- PRESET: nested-repos START/END -->` markers around all preset additions

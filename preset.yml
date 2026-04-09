@@ -14,18 +14,6 @@ requires:
 
 provides:
   templates:
-    - type: "template"
-      name: "plan-template"
-      file: "templates/plan-template.md"
-      description: "Plan template with Affected Nested Repositories section"
-      replaces: "plan-template"
-
-    - type: "template"
-      name: "tasks-template"
-      file: "templates/tasks-template.md"
-      description: "Tasks template with Phase 0 nested repo branch setup"
-      replaces: "tasks-template"
-
     - type: "command"
       name: "speckit.plan"
       file: "commands/speckit.plan.md"
