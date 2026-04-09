@@ -38,7 +38,7 @@ Add to `.specify/init-options.json` in your project root:
 
 ```json
 {
-  "nested_repos": {
+  "multi_repo_branching": {
     "scan_depth": 3,
     "type": "independent"
   }
@@ -60,7 +60,7 @@ Add to `.specify/init-options.json` in your project root:
 
 ### Configuration Not Required
 
-If `.specify/init-options.json` doesn't exist or has no `nested_repos` key, the preset uses defaults: `type = "auto"`, `scan_depth = 2`.
+If `.specify/init-options.json` doesn't exist or has no `multi_repo_branching` key, the preset uses defaults: `type = "auto"`, `scan_depth = 2`.
 
 ## How It Works
 
@@ -100,7 +100,7 @@ my-project/           # Root repo (.git)
 Config:
 ```json
 {
-  "nested_repos": {
+  "multi_repo_branching": {
     "type": "independent",
     "scan_depth": 3
   }
@@ -123,7 +123,7 @@ my-project/           # Root repo (.git)
 Config:
 ```json
 {
-  "nested_repos": {
+  "multi_repo_branching": {
     "type": "submodule"
   }
 }

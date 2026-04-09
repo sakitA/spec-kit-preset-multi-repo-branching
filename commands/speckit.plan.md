@@ -67,10 +67,10 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 <!-- PRESET: multi-repo-branching START -->
 3. **Discover nested repositories**:
-   Read `.specify/init-options.json` from the repo root. Look for the `nested_repos` object:
+   Read `.specify/init-options.json` from the repo root. Look for the `multi_repo_branching` object:
    ```json
    {
-     "nested_repos": {
+     "multi_repo_branching": {
        "scan_depth": 3,
        "type": "independent"
      }
@@ -78,7 +78,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    ```
    - `type`: `"independent"` (default), `"submodule"`, or `"auto"`
    - `scan_depth`: max directory depth to scan (default: 2)
-   - If `init-options.json` does not exist or has no `nested_repos` key, use defaults: `type = "auto"`, `scan_depth = 2`
+   - If `init-options.json` does not exist or has no `multi_repo_branching` key, use defaults: `type = "auto"`, `scan_depth = 2`
 
    **Based on type, discover repos:**
 
