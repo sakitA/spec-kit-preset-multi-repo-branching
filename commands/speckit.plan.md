@@ -66,7 +66,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 2. **Load context**: Read FEATURE_SPEC and `/memory/constitution.md`. Load IMPL_PLAN template (already copied).
 
 <!-- PRESET: multi-repo-branching START -->
-3. **Discover nested repositories**:
+3. **Discover child repositories**:
    Read `.specify/init-options.json` from the repo root. Look for the `multi_repo_branching` object:
    ```json
    {
@@ -82,26 +82,26 @@ You **MUST** consider the user input before proceeding (if not empty).
 
    **Based on type, discover repos:**
 
-   - **If type is `"submodule"`**: Parse `.gitmodules` in the repo root to extract submodule paths. For each entry, the `path` value is the nested repo location.
+   - **If type is `"submodule"`**: Parse `.gitmodules` in the repo root to extract submodule paths. For each entry, the `path` value is the child repo location.
 
    - **If type is `"independent"`**: Run a shell command to find directories containing `.git` that are NOT the repo root:
      - Bash: `find . -maxdepth <scan_depth> -name .git -type d 2>/dev/null | sed 's|/\.git$||' | grep -v '^\.$' | sort`
      - PowerShell: `Get-ChildItem -Path . -Filter .git -Directory -Recurse -Depth <scan_depth> -Force | Where-Object { $_.Parent.FullName -ne (Get-Location).Path } | ForEach-Object { $_.Parent.FullName } | Sort-Object`
-     - For each discovered path, check if it is gitignored by the parent repo: run `git check-ignore -q <path>`. If the path IS ignored but contains `.git`, it is still a valid nested repo (include it). If a parent directory is ignored and does NOT contain `.git`, skip it (do not descend).
+     - For each discovered path, check if it is gitignored by the parent repo: run `git check-ignore -q <path>`. If the path IS ignored but contains `.git`, it is still a valid child repo (include it). If a parent directory is ignored and does NOT contain `.git`, skip it (do not descend).
 
    - **If type is `"auto"`**: Check if `.gitmodules` exists in the repo root.
      - If yes → use `"submodule"` discovery
      - If no → use `"independent"` discovery
 
-   If no nested repos are discovered, skip the nested repo analysis step and continue normally.
+   If no child repos are discovered, skip the repo analysis step and continue normally.
 
-4. **Identify affected nested repositories**: If nested repos were discovered:
+4. **Identify affected repositories**: If child repos were discovered:
    - Read the feature spec (FEATURE_SPEC)
-   - For each discovered nested repo, determine whether this feature requires changes in that repo based on the spec's requirements, user stories, and technical scope
-   - Add an **Affected Nested Repositories** section under **Project Structure** in plan.md with a table:
+   - For each discovered child repo, determine whether this feature requires changes in that repo based on the spec's requirements, user stories, and technical scope
+   - Add an **Affected Repositories** section under **Project Structure** in plan.md with a table:
 
      ```markdown
-     ### Affected Nested Repositories
+     ### Affected Repositories
 
      | Repo Path | Type | Reason |
      |-----------|------|--------|
@@ -122,7 +122,7 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Phase 1: Update agent context by running the agent script
    - Re-evaluate Constitution Check post-design
 
-6. **Stop and report**: Command ends after Phase 2 planning. Report branch, IMPL_PLAN path, generated artifacts, and affected nested repos (if any).
+6. **Stop and report**: Command ends after Phase 2 planning. Report branch, IMPL_PLAN path, generated artifacts, and affected repos (if any).
 
 7. **Check for extension hooks**: After reporting, check if `.specify/extensions.yml` exists in the project root.
    - If it exists, read it and look for entries under the `hooks.after_plan` key

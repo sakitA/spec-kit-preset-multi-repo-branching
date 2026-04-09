@@ -17,13 +17,13 @@ provides:
     - type: "command"
       name: "speckit.plan"
       file: "commands/speckit.plan.md"
-      description: "Plan command with nested repo discovery and analysis"
+      description: "Plan command with multi-repo discovery and analysis"
       replaces: "speckit.plan"
 
     - type: "command"
       name: "speckit.tasks"
       file: "commands/speckit.tasks.md"
-      description: "Tasks command with nested repo branch-creation task generation"
+      description: "Tasks command with multi-repo branch-creation task generation"
       replaces: "speckit.tasks"
 
 tags:

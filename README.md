@@ -4,16 +4,16 @@ A community preset for [Spec Kit](https://github.com/github/spec-kit) that coord
 
 ## Problem
 
-In multi-module projects where sub-components maintain independent git histories (nested under a shared root) or use git submodules, Spec Kit only operates on the root repository. Developers must manually create matching feature branches in each affected sub-component.
+In multi-module projects where sub-components maintain independent git histories (stored within a shared root) or use git submodules, Spec Kit only operates on the root repository. Developers must manually create matching feature branches in each affected sub-component.
 
 ## What This Preset Does
 
 | Phase | Without Preset | With Preset |
 |-------|---------------|-------------|
-| **Plan** | Analyzes root repo only | Discovers nested repos, identifies which are affected by the feature |
+| **Plan** | Analyzes root repo only | Discovers child repos, identifies which are affected by the feature |
 | **Tasks** | No branch setup tasks | Generates Phase 1 tasks to create feature branches in affected repos |
 
-The preset supports two types of nested repositories:
+The preset supports two types of child repositories:
 
 - **Independent repos** — subdirectories with their own `.git` (not formal git submodules)
 - **Git submodules** — formally registered in `.gitmodules`
@@ -49,7 +49,7 @@ Add to `.specify/init-options.json` in your project root:
 
 | Option | Values | Default | Description |
 |--------|--------|---------|-------------|
-| `type` | `"independent"`, `"submodule"`, `"auto"` | `"auto"` | How to discover nested repos |
+| `type` | `"independent"`, `"submodule"`, `"auto"` | `"auto"` | How to discover child repos |
 | `scan_depth` | `1`–`10` | `2` | Max directory depth to scan |
 
 ### Type Modes
@@ -72,11 +72,11 @@ If `.specify/init-options.json` doesn't exist or has no `multi_repo_branching` k
    - **Submodule**: Parses `.gitmodules` for submodule paths
    - **Auto**: Checks for `.gitmodules`, falls back to independent scan
 3. Cross-references discovered repos against the feature spec
-4. Documents affected repos in the plan's **Affected Nested Repositories** section
+4. Documents affected repos in the plan's **Affected Repositories** section
 
 ### During `/speckit.tasks`
 
-1. Reads the "Affected Nested Repositories" section from `plan.md`
+1. Reads the "Affected Repositories" section from `plan.md`
 2. Generates Phase 1 setup tasks for branch creation:
    - **Independent**: `git -C "<path>" checkout -b "<BRANCH>"`
    - **Submodule**: `git submodule update --init "<path>" && git -C "<path>" checkout -b "<BRANCH>"`
@@ -137,7 +137,7 @@ If you don't add any config, the preset auto-detects:
 
 ## What's Overridden
 
-This preset overrides **commands only** — no template overrides. Core templates are used as-is, and the commands instruct the AI agent to add nested-repo sections when generating plan.md and tasks.md.
+This preset overrides **commands only** — no template overrides. Core templates are used as-is, and the commands instruct the AI agent to add multi-repo sections when generating plan.md and tasks.md.
 
 | File | Type | Core Behavior Preserved | Additions |
 |------|------|------------------------|-----------|
@@ -146,7 +146,7 @@ This preset overrides **commands only** — no template overrides. Core template
 
 ### Why commands-only?
 
-Overriding templates requires copying the entire core template to add a few lines. When upstream updates templates, presets become stale. By keeping template overrides out, the AI uses the latest core templates and adds nested-repo sections dynamically via command instructions.
+Overriding templates requires copying the entire core template to add a few lines. When upstream updates templates, presets become stale. By keeping template overrides out, the AI uses the latest core templates and adds multi-repo sections dynamically via command instructions.
 
 Command overrides are clearly marked with `<!-- PRESET: multi-repo-branching START/END -->` comments around additions for easy diffing when upstream changes.
 
