@@ -148,11 +148,43 @@ This preset overrides **commands only** — no template overrides. Core template
 
 Overriding templates requires copying the entire core template to add a few lines. When upstream updates templates, presets become stale. By keeping template overrides out, the AI uses the latest core templates and adds multi-repo sections dynamically via command instructions.
 
-Command overrides are clearly marked with `<!-- PRESET: multi-repo-branching START/END -->` comments around additions for easy diffing when upstream changes.
+Command overrides are clearly marked with `<!-- PRESET: multi-repo-branching START/END -->` comments around additions for easy diffing when upstream changes. See [Keeping Up with Upstream](#keeping-up-with-upstream) for the update workflow.
 
-### Composition readiness
+## Keeping Up with Upstream
 
-Spec Kit has a [composition strategies feature](https://github.com/github/spec-kit) in development (`append`, `prepend`, `wrap`). When it lands, this preset can migrate to `strategy: wrap` for commands — eliminating all core content duplication.
+This preset overrides core `speckit.plan` and `speckit.tasks` commands. When Spec Kit releases a new version, the core commands may change. Each command file includes a tracking header:
+
+```html
+<!-- Based on spec-kit v0.5.1 (SHA: aa2282e) — core content from github/spec-kit -->
+```
+
+### Checking for drift
+
+1. Note the version/SHA in the tracking header
+2. Compare against the latest Spec Kit release on [github/spec-kit](https://github.com/github/spec-kit/releases)
+3. If there's a new release, diff the core commands:
+   ```bash
+   # Fetch the core command from the version your preset is based on
+   git show v0.5.1:commands/speckit.plan.md > /tmp/old-plan.md
+
+   # Fetch the core command from the new release
+   git show v0.6.0:commands/speckit.plan.md > /tmp/new-plan.md
+
+   # See what changed
+   diff /tmp/old-plan.md /tmp/new-plan.md
+   ```
+
+### Applying updates
+
+1. Open the preset's command file (e.g., `commands/speckit.plan.md`)
+2. Look for `<!-- PRESET: multi-repo-branching START -->` and `<!-- PRESET: multi-repo-branching END -->` markers — these are the preset additions
+3. Update the core content (everything **outside** the markers) to match the new upstream version
+4. Update the tracking header with the new version and SHA
+5. Test, commit, and retag
+
+### When composition lands
+
+Spec Kit has a composition feature in development (`strategy: wrap`, `strategy: append`). Once merged, this preset can migrate to thin wrapper commands that reference core content via `{CORE_TEMPLATE}` — eliminating the need to track upstream changes manually.
 
 ## Stacking
 
